@@ -4,12 +4,15 @@
  */
 package Database;
 
+import Model.Livros;
 import Model.Usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 /**
  *
  * @author Feh
@@ -59,5 +62,33 @@ public class UsuarioDAO {
             JOptionPane.showMessageDialog(null, "UsuarioDAO: " + erro);
             return null;
         }
+    }
+    
+     public List<Usuario> getUsuarios()
+        {
+            String sql = "SELECT * FROM tb_cadastro_user";
+            try {
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                ResultSet rs = stmt.executeQuery();
+                List<Usuario> listaUsuario = new ArrayList<>();
+                // percorre o "rs" e salva as informações dentro de uma var "Curso"
+                // e depois salva essa var dentro da lista
+
+                while(rs.next()){
+                    Usuario user = new Usuario();
+                    user.setNome(rs.getString("nome_user"));
+                    user.setDataNasci(rs.getString("data_nascimento"));
+                    user.setCpf(rs.getString("cpf_user"));
+                    user.setEmail(rs.getString("email_user"));
+                    user.setSenha(rs.getString("senha_user"));
+                    listaUsuario.add(user);
+                }
+                return listaUsuario;
+            
+            }catch (SQLException e) {
+                return null;
+    
+        }
+            
     }
 }

@@ -4,12 +4,14 @@
  */
 package UI;
 
+
 import Database.UsuarioDAO;
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import Model.Usuario;
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -17,6 +19,29 @@ import java.util.ArrayList;
  * @author Feh
  */
 public class register_view extends javax.swing.JFrame {
+    
+     private void preencheTabela()
+    {
+        //Criar uma variável "LivroDAO"
+        //Pegar dados dos cursos e colocar na tabela
+        UsuarioDAO userDAO = new UsuarioDAO();
+        List<Usuario> listaUsuario = userDAO.getUsuarios();
+        
+        DefaultTableModel tabelaLivros = (DefaultTableModel) tbCadastro9.getModel();
+        
+        //percorre a "listaLivros" e insere na Tabela
+        for(Usuario u : listaUsuario){
+           Object[] obj = new Object[]{
+               u.getNome(), //nome
+               u.getDataNasci(), //dataNasci
+               u.getCpf(), //cpf
+               u.getEmail(), //email
+               u.getSenha() //senha
+           };
+           tabelaLivros.addRow(obj);
+        } 
+    }
+
 
     /**
      * Creates new form register_view
@@ -1002,12 +1027,12 @@ public class register_view extends javax.swing.JFrame {
         u.setCpf(cpf);
         u.setEmail(email);
         u.setSenha(senha);
-
-        funcionarios.add(u);
-          
+ 
         UsuarioDAO objusuarioDAO = new UsuarioDAO();
         objusuarioDAO.inserir(u);
 
+        /**
+        funcionarios.add(u);
 
         DefaultTableModel modelo = (DefaultTableModel) tbCadastro9.getModel();
         modelo.addRow(new String []{txtNome.getText(),txtDataNasci.getText(),txtCpf.getText(),txtEmail.getText(),txtSenha.getText(),Data});
@@ -1023,8 +1048,9 @@ public class register_view extends javax.swing.JFrame {
         txtEmail.setText("");
         txtSenha.setText("");
         txtNome.requestFocus();
+        */
         
-      
+        preencheTabela();
         btnExcluir.setEnabled(false);
         btnEditar.setEnabled(false);
 
