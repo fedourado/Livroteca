@@ -4,6 +4,12 @@
  */
 package UI;
 
+import Database.UsuarioDAO;
+import Model.Usuario;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import java.sql.ResultSet;
+
 /**
  *
  * @author Feh
@@ -15,6 +21,7 @@ public class login_view extends javax.swing.JFrame {
      */
     public login_view() {
         initComponents();
+        setLocationRelativeTo(null);
       
     }
     
@@ -38,7 +45,7 @@ public class login_view extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btnLogin = new javax.swing.JButton();
         logo = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -117,12 +124,17 @@ public class login_view extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Esqueci minha senha");
 
-        jButton1.setBackground(new java.awt.Color(203, 200, 192));
-        jButton1.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(60, 65, 70));
-        jButton1.setText("Login");
-        jButton1.setAutoscrolls(true);
-        jButton1.setBorderPainted(false);
+        btnLogin.setBackground(new java.awt.Color(203, 200, 192));
+        btnLogin.setFont(new java.awt.Font("Helvetica Neue", 0, 18)); // NOI18N
+        btnLogin.setForeground(new java.awt.Color(60, 65, 70));
+        btnLogin.setText("Login");
+        btnLogin.setAutoscrolls(true);
+        btnLogin.setBorderPainted(false);
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt);
+            }
+        });
 
         logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/Frame 6.2.png"))); // NOI18N
 
@@ -160,7 +172,7 @@ public class login_view extends javax.swing.JFrame {
                 .addGap(41, 41, 41))
             .addGroup(jPanelAzulLayout.createSequentialGroup()
                 .addGap(132, 132, 132)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelAzulLayout.setVerticalGroup(
@@ -185,7 +197,7 @@ public class login_view extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(43, 43, 43))
         );
 
@@ -214,6 +226,44 @@ public class login_view extends javax.swing.JFrame {
     private void txtPasswordFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPasswordFocusGained
         txtPassword.setText("");
     }//GEN-LAST:event_txtPasswordFocusGained
+
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        try {
+          
+            String nome_usuario, senha_usuario;
+
+            nome_usuario = txtUsername.getText();
+            senha_usuario = txtPassword.getText();
+
+            Usuario userlogin = new Usuario();
+            userlogin.setNome(nome_usuario);
+            userlogin.setSenha(senha_usuario);
+            
+            UsuarioDAO usuariodao = new UsuarioDAO();
+            ResultSet rsusuariodao = usuariodao.autenticacaoUsuario(userlogin);
+            
+            if (rsusuariodao.next()) {
+                // chamar tela
+                home_view objhomeview = new home_view();
+                objhomeview.setVisible(true);
+                
+                dispose();
+                
+            } else {
+                // enviar mensagem
+                JOptionPane.showMessageDialog(null, "Usuário ou Senha inválida");
+            }
+        
+        } catch (SQLException erro) {
+            JOptionPane.showMessageDialog(null, "Login-view" + erro);
+        }
+        
+        
+      
+        
+        
+        
+    }//GEN-LAST:event_btnLoginActionPerformed
 
     /**
      * @param args the command line arguments
@@ -251,7 +301,7 @@ public class login_view extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnLogin;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

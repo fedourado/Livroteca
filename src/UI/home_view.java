@@ -15,6 +15,7 @@ public class home_view extends javax.swing.JFrame {
      */
     public home_view() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**

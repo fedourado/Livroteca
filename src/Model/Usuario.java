@@ -8,7 +8,7 @@ package Model;
  *
  * @author fernandadourado
  */
-public class Funcionario {
+public class Usuario {
     
     private int codigoAdm;
     private String nome;

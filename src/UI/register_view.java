@@ -4,11 +4,11 @@
  */
 package UI;
 
-import Database.FuncionarioDAO;
+import Database.UsuarioDAO;
 import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import Model.Funcionario;
+import Model.Usuario;
 import java.util.ArrayList;
 
 
@@ -25,10 +25,11 @@ public class register_view extends javax.swing.JFrame {
         initComponents();
         desativaBotao();
         desativaTexto();
+        setLocationRelativeTo(null);
 
     }
 
-    public ArrayList<Funcionario> funcionarios = new ArrayList<>();
+    public ArrayList<Usuario> funcionarios = new ArrayList<>();
 
     
     /**
@@ -993,21 +994,26 @@ public class register_view extends javax.swing.JFrame {
         String cpf = txtCpf.getText();
         String email = txtEmail.getText();
         String senha = txtSenha.getText();
-        Funcionario f = new Funcionario();
+        
+        Usuario u = new Usuario();
+     
+        u.setNome(nome);
+        u.setDataNasci(dataNasci);
+        u.setCpf(cpf);
+        u.setEmail(email);
+        u.setSenha(senha);
 
-        f.setNome(nome);
-        f.setDataNasci(dataNasci);
-        f.setCpf(cpf);
-        f.setEmail(email);
-        f.setSenha(senha);
+        funcionarios.add(u);
+          
+        UsuarioDAO objusuarioDAO = new UsuarioDAO();
+        objusuarioDAO.inserir(u);
 
-        funcionarios.add(f);
 
         DefaultTableModel modelo = (DefaultTableModel) tbCadastro9.getModel();
         modelo.addRow(new String []{txtNome.getText(),txtDataNasci.getText(),txtCpf.getText(),txtEmail.getText(),txtSenha.getText(),Data});
         modelo.setNumRows(0);
 
-        for(Funcionario func: funcionarios){
+        for(Usuario func: funcionarios){
             modelo.addRow(new String []{func.getNome(),func.getDataNasci(),func.getCpf(),func.getEmail(),func.getSenha(),Data});
         }
 
@@ -1018,9 +1024,7 @@ public class register_view extends javax.swing.JFrame {
         txtSenha.setText("");
         txtNome.requestFocus();
         
-        FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
-        funcionarioDAO.inserir(f);
-
+      
         btnExcluir.setEnabled(false);
         btnEditar.setEnabled(false);
 

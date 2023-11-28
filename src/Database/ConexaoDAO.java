@@ -28,7 +28,7 @@ public class ConexaoDAO {
             );
             return conn;
             
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.out.println("Erro ao conectar ConexaoDAO" + e.getMessage());
             return null;
         }

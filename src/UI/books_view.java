@@ -5,6 +5,9 @@
 package UI;
 
 
+import Database.LivroDAO;
+import Model.Livros;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -22,8 +25,12 @@ public class books_view extends javax.swing.JFrame {
         initComponents();
         desativaBotao();
         desativaTexto();
+        setLocationRelativeTo(null);
     }
 
+    public ArrayList<Livros> livros = new ArrayList<>();
+
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -54,15 +61,15 @@ public class books_view extends javax.swing.JFrame {
         pnlBuscar = new javax.swing.JPanel();
         btnBuscar = new javax.swing.JButton();
         pnTitulo = new javax.swing.JPanel();
-        txtTitulo = new javax.swing.JTextField();
+        txtCodigo = new javax.swing.JTextField();
         pnlNome = new javax.swing.JPanel();
-        txtSubtitulo = new javax.swing.JTextField();
+        txtTitulo = new javax.swing.JTextField();
         pnlDataNasci = new javax.swing.JPanel();
-        txtAutor = new javax.swing.JTextField();
+        txtSubtitulo = new javax.swing.JTextField();
         pnlCPF = new javax.swing.JPanel();
-        txtEditora = new javax.swing.JTextField();
+        txtAutor = new javax.swing.JTextField();
         pnlEmail = new javax.swing.JPanel();
-        txtDataPubli = new javax.swing.JTextField();
+        txtEditora = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
         jPanel3 = new javax.swing.JPanel();
         btnEditar = new javax.swing.JButton();
@@ -81,7 +88,7 @@ public class books_view extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         pnlEmail1 = new javax.swing.JPanel();
-        txtDataPubli1 = new javax.swing.JTextField();
+        txtDataPubli = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -334,6 +341,42 @@ public class books_view extends javax.swing.JFrame {
         pnTitulo.setBackground(new java.awt.Color(240, 241, 242));
         pnTitulo.setPreferredSize(new java.awt.Dimension(408, 38));
 
+        txtCodigo.setBackground(new java.awt.Color(240, 241, 242));
+        txtCodigo.setFont(new java.awt.Font("Montserrat", 0, 14)); // NOI18N
+        txtCodigo.setForeground(new java.awt.Color(92, 95, 98));
+        txtCodigo.setBorder(null);
+        txtCodigo.setCaretColor(new java.awt.Color(92, 95, 98));
+        txtCodigo.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtCodigoFocusGained(evt);
+            }
+        });
+        txtCodigo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCodigoActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnTituloLayout = new javax.swing.GroupLayout(pnTitulo);
+        pnTitulo.setLayout(pnTituloLayout);
+        pnTituloLayout.setHorizontalGroup(
+            pnTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnTituloLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(18, Short.MAX_VALUE))
+        );
+        pnTituloLayout.setVerticalGroup(
+            pnTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnTituloLayout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        pnlNome.setBackground(new java.awt.Color(240, 241, 242));
+        pnlNome.setPreferredSize(new java.awt.Dimension(426, 38));
+
         txtTitulo.setBackground(new java.awt.Color(240, 241, 242));
         txtTitulo.setFont(new java.awt.Font("Montserrat", 0, 14)); // NOI18N
         txtTitulo.setForeground(new java.awt.Color(92, 95, 98));
@@ -344,42 +387,6 @@ public class books_view extends javax.swing.JFrame {
                 txtTituloFocusGained(evt);
             }
         });
-        txtTitulo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTituloActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout pnTituloLayout = new javax.swing.GroupLayout(pnTitulo);
-        pnTitulo.setLayout(pnTituloLayout);
-        pnTituloLayout.setHorizontalGroup(
-            pnTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnTituloLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
-        );
-        pnTituloLayout.setVerticalGroup(
-            pnTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnTituloLayout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        pnlNome.setBackground(new java.awt.Color(240, 241, 242));
-        pnlNome.setPreferredSize(new java.awt.Dimension(426, 38));
-
-        txtSubtitulo.setBackground(new java.awt.Color(240, 241, 242));
-        txtSubtitulo.setFont(new java.awt.Font("Montserrat", 0, 14)); // NOI18N
-        txtSubtitulo.setForeground(new java.awt.Color(92, 95, 98));
-        txtSubtitulo.setBorder(null);
-        txtSubtitulo.setCaretColor(new java.awt.Color(92, 95, 98));
-        txtSubtitulo.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtSubtituloFocusGained(evt);
-            }
-        });
 
         javax.swing.GroupLayout pnlNomeLayout = new javax.swing.GroupLayout(pnlNome);
         pnlNome.setLayout(pnlNomeLayout);
@@ -387,27 +394,27 @@ public class books_view extends javax.swing.JFrame {
             pnlNomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlNomeLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(txtSubtitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(20, Short.MAX_VALUE))
         );
         pnlNomeLayout.setVerticalGroup(
             pnlNomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlNomeLayout.createSequentialGroup()
                 .addGap(6, 6, 6)
-                .addComponent(txtSubtitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pnlDataNasci.setBackground(new java.awt.Color(240, 241, 242));
         pnlDataNasci.setPreferredSize(new java.awt.Dimension(408, 38));
 
-        txtAutor.setBackground(new java.awt.Color(240, 241, 242));
-        txtAutor.setFont(new java.awt.Font("Montserrat", 0, 14)); // NOI18N
-        txtAutor.setForeground(new java.awt.Color(92, 95, 98));
-        txtAutor.setBorder(null);
-        txtAutor.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtSubtitulo.setBackground(new java.awt.Color(240, 241, 242));
+        txtSubtitulo.setFont(new java.awt.Font("Montserrat", 0, 14)); // NOI18N
+        txtSubtitulo.setForeground(new java.awt.Color(92, 95, 98));
+        txtSubtitulo.setBorder(null);
+        txtSubtitulo.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                txtAutorFocusGained(evt);
+                txtSubtituloFocusGained(evt);
             }
         });
 
@@ -417,19 +424,50 @@ public class books_view extends javax.swing.JFrame {
             pnlDataNasciLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDataNasciLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(txtAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtSubtitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(21, Short.MAX_VALUE))
         );
         pnlDataNasciLayout.setVerticalGroup(
             pnlDataNasciLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDataNasciLayout.createSequentialGroup()
                 .addGap(6, 6, 6)
-                .addComponent(txtAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtSubtitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pnlCPF.setBackground(new java.awt.Color(240, 241, 242));
         pnlCPF.setPreferredSize(new java.awt.Dimension(408, 38));
+
+        txtAutor.setBackground(new java.awt.Color(240, 241, 242));
+        txtAutor.setFont(new java.awt.Font("Montserrat", 0, 14)); // NOI18N
+        txtAutor.setForeground(new java.awt.Color(92, 95, 98));
+        txtAutor.setBorder(null);
+        txtAutor.setCaretColor(new java.awt.Color(92, 95, 98));
+        txtAutor.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtAutorFocusGained(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnlCPFLayout = new javax.swing.GroupLayout(pnlCPF);
+        pnlCPF.setLayout(pnlCPFLayout);
+        pnlCPFLayout.setHorizontalGroup(
+            pnlCPFLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlCPFLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(txtAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(18, Short.MAX_VALUE))
+        );
+        pnlCPFLayout.setVerticalGroup(
+            pnlCPFLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlCPFLayout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addComponent(txtAutor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        pnlEmail.setBackground(new java.awt.Color(240, 241, 242));
+        pnlEmail.setPreferredSize(new java.awt.Dimension(408, 38));
 
         txtEditora.setBackground(new java.awt.Color(240, 241, 242));
         txtEditora.setFont(new java.awt.Font("Montserrat", 0, 14)); // NOI18N
@@ -441,40 +479,9 @@ public class books_view extends javax.swing.JFrame {
                 txtEditoraFocusGained(evt);
             }
         });
-
-        javax.swing.GroupLayout pnlCPFLayout = new javax.swing.GroupLayout(pnlCPF);
-        pnlCPF.setLayout(pnlCPFLayout);
-        pnlCPFLayout.setHorizontalGroup(
-            pnlCPFLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlCPFLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(txtEditora, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
-        );
-        pnlCPFLayout.setVerticalGroup(
-            pnlCPFLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlCPFLayout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(txtEditora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        pnlEmail.setBackground(new java.awt.Color(240, 241, 242));
-        pnlEmail.setPreferredSize(new java.awt.Dimension(408, 38));
-
-        txtDataPubli.setBackground(new java.awt.Color(240, 241, 242));
-        txtDataPubli.setFont(new java.awt.Font("Montserrat", 0, 14)); // NOI18N
-        txtDataPubli.setForeground(new java.awt.Color(92, 95, 98));
-        txtDataPubli.setBorder(null);
-        txtDataPubli.setCaretColor(new java.awt.Color(92, 95, 98));
-        txtDataPubli.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtDataPubliFocusGained(evt);
-            }
-        });
-        txtDataPubli.addActionListener(new java.awt.event.ActionListener() {
+        txtEditora.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDataPubliActionPerformed(evt);
+                txtEditoraActionPerformed(evt);
             }
         });
 
@@ -484,14 +491,14 @@ public class books_view extends javax.swing.JFrame {
             pnlEmailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlEmailLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(txtDataPubli, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtEditora, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(18, Short.MAX_VALUE))
         );
         pnlEmailLayout.setVerticalGroup(
             pnlEmailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlEmailLayout.createSequentialGroup()
                 .addGap(6, 6, 6)
-                .addComponent(txtDataPubli, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtEditora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -655,19 +662,19 @@ public class books_view extends javax.swing.JFrame {
         pnlEmail1.setBackground(new java.awt.Color(240, 241, 242));
         pnlEmail1.setPreferredSize(new java.awt.Dimension(408, 38));
 
-        txtDataPubli1.setBackground(new java.awt.Color(240, 241, 242));
-        txtDataPubli1.setFont(new java.awt.Font("Montserrat", 0, 14)); // NOI18N
-        txtDataPubli1.setForeground(new java.awt.Color(92, 95, 98));
-        txtDataPubli1.setBorder(null);
-        txtDataPubli1.setCaretColor(new java.awt.Color(92, 95, 98));
-        txtDataPubli1.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtDataPubli.setBackground(new java.awt.Color(240, 241, 242));
+        txtDataPubli.setFont(new java.awt.Font("Montserrat", 0, 14)); // NOI18N
+        txtDataPubli.setForeground(new java.awt.Color(92, 95, 98));
+        txtDataPubli.setBorder(null);
+        txtDataPubli.setCaretColor(new java.awt.Color(92, 95, 98));
+        txtDataPubli.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                txtDataPubli1FocusGained(evt);
+                txtDataPubliFocusGained(evt);
             }
         });
-        txtDataPubli1.addActionListener(new java.awt.event.ActionListener() {
+        txtDataPubli.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDataPubli1ActionPerformed(evt);
+                txtDataPubliActionPerformed(evt);
             }
         });
 
@@ -677,14 +684,14 @@ public class books_view extends javax.swing.JFrame {
             pnlEmail1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlEmail1Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(txtDataPubli1, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtDataPubli, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(18, Short.MAX_VALUE))
         );
         pnlEmail1Layout.setVerticalGroup(
             pnlEmail1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlEmail1Layout.createSequentialGroup()
                 .addGap(6, 6, 6)
-                .addComponent(txtDataPubli1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtDataPubli, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -894,13 +901,17 @@ public class books_view extends javax.swing.JFrame {
         txtBuscarLivros.setText("");
     }//GEN-LAST:event_txtBuscarLivrosFocusGained
 
-    private void txtTituloFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTituloFocusGained
+    private void txtCodigoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCodigoFocusGained
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtTituloFocusGained
+    }//GEN-LAST:event_txtCodigoFocusGained
 
-    private void txtTituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTituloActionPerformed
+    private void txtCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtTituloActionPerformed
+    }//GEN-LAST:event_txtCodigoActionPerformed
+
+    private void txtTituloFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTituloFocusGained
+
+    }//GEN-LAST:event_txtTituloFocusGained
 
     private void txtSubtituloFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtSubtituloFocusGained
 
@@ -914,13 +925,9 @@ public class books_view extends javax.swing.JFrame {
 
     }//GEN-LAST:event_txtEditoraFocusGained
 
-    private void txtDataPubliFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDataPubliFocusGained
-
-    }//GEN-LAST:event_txtDataPubliFocusGained
-
-    private void txtDataPubliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDataPubliActionPerformed
+    private void txtEditoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEditoraActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtDataPubliActionPerformed
+    }//GEN-LAST:event_txtEditoraActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
 
@@ -944,27 +951,53 @@ public class books_view extends javax.swing.JFrame {
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         limparTexto();
 
-        DefaultTableModel modelo = (DefaultTableModel) tbCadastro.getModel();
-        modelo.addRow(new String []{txtTitulo.getText(),txtSubtitulo.getText(),txtAutor.getText(),txtEditora.getText(),txtDataPubli.getText()});
+        String titulo = txtTitulo.getText();
+        String subtitulo = txtSubtitulo.getText();
+        String autor = txtAutor.getText();
+        String editora = txtEditora.getText();
+        String dataPubli = txtDataPubli.getText();
+        
+        Livros l = new Livros();
+        
+        l.setTitulo(titulo);
+        l.setSubtitulo(subtitulo);
+        l.setAutor(autor);
+        l.setEditora(editora);
+        l.setDatapublicacao(dataPubli);
+        
+        livros.add(l);
+        
+        
+        LivroDAO objlivroDAO = new LivroDAO();
+        objlivroDAO.inserir(l);
 
+        
+        DefaultTableModel modelo = (DefaultTableModel) tbCadastro.getModel();
+        modelo.addRow(new String []{txtCodigo.getText(),txtTitulo.getText(),txtSubtitulo.getText(),txtAutor.getText(),txtEditora.getText(),txtDataPubli.getText()});
+        modelo.setNumRows(0);
+        
+         for(Livros livro: livros){
+            modelo.addRow(new String []{livro.getTitulo(),livro.getSubtitulo(),livro.getAutor(),livro.getEditora(),livro.getDatapublicacao()});
+        }
+        
+        txtCodigo.setText("");
         txtTitulo.setText("");
         txtSubtitulo.setText("");
         txtAutor.setText("");
         txtEditora.setText("");
-        txtDataPubli.setText("");
-        txtTitulo.requestFocus();
+        txtCodigo.requestFocus();
 
         //modelo.addRow(dados);
 
     }//GEN-LAST:event_btnSalvarActionPerformed
 
-    private void txtDataPubli1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDataPubli1FocusGained
+    private void txtDataPubliFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtDataPubliFocusGained
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtDataPubli1FocusGained
+    }//GEN-LAST:event_txtDataPubliFocusGained
 
-    private void txtDataPubli1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDataPubli1ActionPerformed
+    private void txtDataPubliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDataPubliActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtDataPubli1ActionPerformed
+    }//GEN-LAST:event_txtDataPubliActionPerformed
 
       private void limparTexto(){
         
@@ -976,11 +1009,11 @@ public class books_view extends javax.swing.JFrame {
         btnExcluir.setEnabled(false);
     }
     private void desativaTexto(){
-        txtSubtitulo.setEnabled(false);
-        txtDataPubli.setEnabled(false);
         txtTitulo.setEnabled(false);
-        txtAutor.setEnabled(false);
         txtEditora.setEnabled(false);
+        txtCodigo.setEnabled(false);
+        txtSubtitulo.setEnabled(false);
+        txtAutor.setEnabled(false);
     }
      private void ativaBotao(){
         btnEditar.setEnabled(true);
@@ -988,11 +1021,11 @@ public class books_view extends javax.swing.JFrame {
         btnExcluir.setEnabled(true);
     }
     private void ativaTexto(){
-        txtSubtitulo.setEnabled(true);
-        txtDataPubli.setEnabled(true);
-        txtTitulo.setEnabled(false);
-        txtAutor.setEnabled(true);
+        txtTitulo.setEnabled(true);
         txtEditora.setEnabled(true);
+        txtCodigo.setEnabled(false);
+        txtSubtitulo.setEnabled(true);
+        txtAutor.setEnabled(true);
     }
     
     /**
@@ -1076,8 +1109,8 @@ public class books_view extends javax.swing.JFrame {
     private javax.swing.JTable tbCadastro;
     private javax.swing.JTextField txtAutor;
     private javax.swing.JTextField txtBuscarLivros;
+    private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtDataPubli;
-    private javax.swing.JTextField txtDataPubli1;
     private javax.swing.JTextField txtEditora;
     private javax.swing.JTextField txtSubtitulo;
     private javax.swing.JTextField txtTitulo;
