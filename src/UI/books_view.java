@@ -985,6 +985,7 @@ public class books_view extends javax.swing.JFrame {
         txtSubtitulo.setText("");
         txtAutor.setText("");
         txtEditora.setText("");
+        txtDataPubli.setText("");
         txtCodigo.requestFocus();
 
         //modelo.addRow(dados);
