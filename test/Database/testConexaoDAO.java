@@ -4,6 +4,8 @@
  */
 package Database;
 
+import Database.ConexaoDAO;
+
 /**
  *
  * @author Feh

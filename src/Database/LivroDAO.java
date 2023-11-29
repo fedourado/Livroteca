@@ -41,7 +41,7 @@ public class LivroDAO {
 
             }
             catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "Erro ao inserir funcionario: " + e);
+                JOptionPane.showMessageDialog(null, "Erro ao inserir livros: " + e);
 
             }
         }
